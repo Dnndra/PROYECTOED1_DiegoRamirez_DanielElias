@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿   using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibreriaRD2;
+using PROYECTOED1_DiegoRamirez_DanielElias.Models.Data;
 
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 {
@@ -13,6 +15,46 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult ListaDePacientes()
+        {
+            return View(Singleton.Instance.TablaHashPacientes);
+        }
+
+        public ActionResult AgregarPaciente()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AgregarPaciente(IFormCollection collection)
+        {
+
+            try
+            {
+              
+                var paciente = new Models.Paciente
+                {
+                    ID = Convert.ToInt32(collection["ID"]),
+                    Nombre = collection["Nombre"],
+                    Apellido = collection["Apellido"],
+                    DPI = collection["DPI"],
+                    Departamento = collection["Departamento"],
+                    Municipio = collection["Municipio"]
+
+                };
+
+                Singleton.Instance.TablaHashPacientes.Add(paciente.Nombre, paciente);
+              
+                return RedirectToAction(nameof(ListaDePacientes));
+
+            }
+            catch
+            {
+                return View();
+            }
+
         }
 
         // GET: ControladorPacientes/Details/5

@@ -10,9 +10,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
     {
         private readonly static Singleton _instance = new Singleton();
 
+        public HashTable<Paciente> TablaHashPacientes;
         private Singleton()
         {
-            
+            TablaHashPacientes = new HashTable<Paciente>(10);
         }
 
 

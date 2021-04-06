@@ -26,8 +26,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models
 
         [Required]
         public string Municipio { get; set; }
-        [Required]
-        public int OrderedQuantity { get; set; }
+       
 
         public int CompareTo(object obj)
         {
