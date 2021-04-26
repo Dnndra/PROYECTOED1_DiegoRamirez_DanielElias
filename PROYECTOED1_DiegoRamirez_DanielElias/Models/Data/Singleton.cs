@@ -11,9 +11,13 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         private readonly static Singleton _instance = new Singleton();
 
         public HashTable<Paciente> TablaHashPacientes;
+        public MinHeap<Paciente> MinheapPacientes;
+        public AVLTree<Paciente> Buscarpaciente; 
         private Singleton()
         {
             TablaHashPacientes = new HashTable<Paciente>(10);
+            MinheapPacientes = new MinHeap<Paciente>();
+            Buscarpaciente = new AVLTree<Paciente>();
         }
 
 

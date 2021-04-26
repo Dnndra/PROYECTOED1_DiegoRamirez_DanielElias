@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
-    public class Paciente
+    public class Paciente : IComparable
     {
 
         [Required]
@@ -29,6 +29,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         [Required]
         public int Edad { get; set; }
-
+        public int CompareTo(object obj)
+        {
+            var ordertree = ((Paciente)obj).Nombre;
+            return ordertree.CompareTo(Nombre);
+        }
     }
 }
