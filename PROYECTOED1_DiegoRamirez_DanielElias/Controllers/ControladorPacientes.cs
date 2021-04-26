@@ -34,9 +34,9 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             try
             {
               
-                var paciente = new Models.Paciente
+                var paciente = new Models.Data.Paciente
                 {
-                    ID = Convert.ToInt32(collection["ID"]),
+                    
                     Nombre = collection["Nombre"],
                     Apellido = collection["Apellido"],
                     DPI = collection["DPI"],

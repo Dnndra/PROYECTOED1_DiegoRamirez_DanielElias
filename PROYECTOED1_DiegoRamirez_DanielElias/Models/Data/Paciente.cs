@@ -4,13 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace PROYECTOED1_DiegoRamirez_DanielElias.Models
+namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
-    public class Paciente : IComparable
-
+    public class Paciente
     {
-        [Required]
-        public int ID { get; set; }
 
         [Required]
         public string Nombre { get; set; }
@@ -26,12 +23,12 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models
 
         [Required]
         public string Municipio { get; set; }
-       
 
-        public int CompareTo(object obj)
-        {
-            var ordertree = ((Paciente)obj).Nombre;
-            return ordertree.CompareTo(Nombre);
-        }
+        [Required]
+        public string Profesion { get; set; }
+
+        [Required]
+        public int Edad { get; set; }
+
     }
 }

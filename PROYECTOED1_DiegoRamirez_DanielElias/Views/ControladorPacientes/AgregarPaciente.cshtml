@@ -1,4 +1,4 @@
-﻿@model PROYECTOED1_DiegoRamirez_DanielElias.Models.Paciente
+﻿@model PROYECTOED1_DiegoRamirez_DanielElias.Models.Data.Paciente
 
 @{
     ViewData["Title"] = "AgregarPaciente";
@@ -12,11 +12,6 @@
     <div class="col-md-4">
         <form asp-action="AgregarPaciente">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ID" class="control-label"></label>
-                <input asp-for="ID" class="form-control" />
-                <span asp-validation-for="ID" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -42,7 +37,16 @@
                 <input asp-for="Municipio" class="form-control" />
                 <span asp-validation-for="Municipio" class="text-danger"></span>
             </div>
-       
+            <div class="form-group">
+                <label asp-for="Profesion" class="control-label"></label>
+                <input asp-for="Profesion" class="form-control" />
+                <span asp-validation-for="Profesion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Edad" class="control-label"></label>
+                <input asp-for="Edad" class="form-control" />
+                <span asp-validation-for="Edad" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -54,3 +58,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
