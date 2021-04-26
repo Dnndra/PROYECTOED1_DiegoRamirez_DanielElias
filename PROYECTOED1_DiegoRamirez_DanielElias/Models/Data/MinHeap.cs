@@ -63,13 +63,34 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                     elements[i] = tmp;
                 }
             }
+            listPriority();
         }
 
         public PriorityNode<T> GetMin()
         {
-            PriorityNode<T> min = elements[0];
+            int index= 0;
+            PriorityNode<T> min = elements[index];
+            index++;
             return min;
         }
+
+        public void listPriority()
+        {
+            PriorityNode<T> temp;
+            for (int i = 0; i < elements.Count; i++)
+            {
+                for (int j = 0; j < elements.Count - 1; j++)
+                {
+                    if (elements[j].prioridad > (elements[j + 1].prioridad))
+                    {
+                        temp = elements[j];
+                        elements[j] = elements[j + 1];
+                        elements[j + 1] = temp;
+                    }
+                }
+            }
+        }
+
 
     }
 }

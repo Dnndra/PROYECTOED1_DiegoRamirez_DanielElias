@@ -29,6 +29,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         [Required]
         public int Edad { get; set; }
+
+        public DateTime FechaDeVacunacion { get; set; }
+
+        public int Prioridad { get; set; }
         public int CompareTo(object obj)
         {
             var ordertree = ((Paciente)obj).Nombre;

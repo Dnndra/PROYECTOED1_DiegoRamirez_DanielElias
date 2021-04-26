@@ -12,15 +12,18 @@
     <input type="submit" value="Agregar persona a lista de espera" onclick="location.href='@Url.Action("AgregarPaciente", "ControladorPacientes")'" class="btn btn-outline-primary" />
 </div>
 <div class="form-group">
-    <input type="submit" value="Vacunar personas" onclick="location.href='@Url.Action("Search", "Drugs")'" class="btn btn-outline-primary" />
+    <input type="submit" value="Calendarizar Vacunación" onclick="location.href='@Url.Action("CalendarizarVacunacion", "ControladorPacientes")'" class="btn btn-outline-primary" />
 </div>
 <div class="form-group">
     <input type="submit" value="Reprogramar vacunación" onclick="location.href='@Url.Action("ReStock", "Drugs")'" class="btn btn-outline-primary" />
 </div>
+<div class="form-group">
+    <input type="submit" value="Buscar Persona" onclick="location.href='@Url.Action("ReStock", "Drugs")'" class="btn btn-outline-primary" />
+</div>
 
 <div>
     <p>
-        <a asp-action="">Lista de espera </a>
+        <a asp-action="ListaDePacientes">Lista de espera </a>
     </p>
 </div>
 <div>

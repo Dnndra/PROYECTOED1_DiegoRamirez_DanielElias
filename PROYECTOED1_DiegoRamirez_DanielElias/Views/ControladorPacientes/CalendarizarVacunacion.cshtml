@@ -1,12 +1,14 @@
 ﻿@model IEnumerable<PROYECTOED1_DiegoRamirez_DanielElias.Models.Data.Paciente>
 
 @{
-    ViewData["Title"] = "Lista de Espera";
+    ViewData["Title"] = "CalendarizarVacunacion";
 }
 
-<h1>Lista de espera</h1>
+<h1>CalendarizarVacunacion</h1>
 
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -19,7 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.DPI)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Departamento)
             </th>
             <th>
@@ -27,13 +29,13 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Profesion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Edad)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.FechaDeVacunacion)
             </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.Edad)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDeVacunacion)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Prioridad)
             </th>
@@ -52,7 +54,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DPI)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Departamento)
             </td>
             <td>
@@ -60,13 +62,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Profesion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.FechaDeVacunacion)
             </td>*@
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaDeVacunacion)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Prioridad)
             </td>
