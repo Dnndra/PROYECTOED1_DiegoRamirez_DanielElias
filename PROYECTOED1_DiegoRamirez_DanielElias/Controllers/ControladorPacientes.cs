@@ -23,7 +23,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
         public static int contador = 0;
         public static string csvPacientes = "";
         public static bool cargaInicial = false;
-
+        public static bool calendarizado = false;
         //hosting environment
         IWebHostEnvironment hostingEnvironment;
         public ControladorPacientes(IWebHostEnvironment hostingEnvironment)
@@ -60,12 +60,20 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                         nuevoPaciente.Edad = Convert.ToInt32(fields[6]);
                         nuevoPaciente.FechaDeVacunacion = Convert.ToDateTime(fields[7]);
                         nuevoPaciente.Prioridad = Convert.ToInt32(fields[8]);
-                        csvPacientes += $"{fields[0]},{fields[1]},{fields[2]},{fields[3]},{fields[4]},{fields[5]},{fields[6]},{fields[7]},{fields[8]}\n";
+                        nuevoPaciente.Vacunado = Convert.ToBoolean(fields[9]);
+                        csvPacientes += $"{fields[0]},{fields[1]},{fields[2]},{fields[3]},{fields[4]},{fields[5]},{fields[6]},{fields[7]},{fields[8]},{fields[9]}\n";
 
+                        if (nuevoPaciente.Vacunado == false)
+                        {
+                            Singleton.Instance.MinheapPacientes.Add(node);
+                        }
+                        else
+                        {
+                            Singleton.Instance.ListaDeVacunados.AddLast(nuevoPaciente);
+                        }
                         node.Data = nuevoPaciente;
                         node.prioridad = nuevoPaciente.Prioridad;
                         Singleton.Instance.TablaHashPacientes.Add(nuevoPaciente.DPI, nuevoPaciente);
-                        Singleton.Instance.MinheapPacientes.Add(node);
                         Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente, Singleton.Instance.Buscarpaciente.Root);
 
                     }
@@ -74,6 +82,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
                     }
                 }
+                Singleton.Instance.MinheapPacientes.Heapify();
                 reader.Close();
 
             }
@@ -87,9 +96,30 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
             TextWriter writer = new StreamWriter($"{hostingEnvironment.WebRootPath}\\csv\\pacientes.csv");
 
-            csvPacientes += $"{paciente.Nombre},{paciente.Apellido},{paciente.DPI},{paciente.Departamento},{paciente.Municipio},{paciente.Profesion},{paciente.Edad},{paciente.FechaDeVacunacion},{paciente.Prioridad}\n";
+            csvPacientes += $"{paciente.Nombre},{paciente.Apellido},{paciente.DPI},{paciente.Departamento},{paciente.Municipio},{paciente.Profesion},{paciente.Edad},{paciente.FechaDeVacunacion},{paciente.Prioridad},{paciente.Vacunado}\n";
             writer.Write(csvPacientes);
             writer.Close();
+        }
+
+        void ActualizarTablaPacientes()
+        {
+            TextWriter writer = new StreamWriter($"{hostingEnvironment.WebRootPath}\\csv\\pacientes.csv");
+            csvPacientes = "";
+            var listaDeEspera = Singleton.Instance.ListaDeEspera;
+            var listaDeVacunados = Singleton.Instance.ListaDeVacunados;
+            foreach (Paciente paciente in listaDeEspera)
+            {
+                csvPacientes += $"{paciente.Nombre},{paciente.Apellido},{paciente.DPI},{paciente.Departamento},{paciente.Municipio},{paciente.Profesion},{paciente.Edad},{paciente.FechaDeVacunacion},{paciente.Prioridad},{paciente.Vacunado}\n";
+
+            }
+            foreach (Paciente paciente in listaDeVacunados)
+            {
+                csvPacientes += $"{paciente.Nombre},{paciente.Apellido},{paciente.DPI},{paciente.Departamento},{paciente.Municipio},{paciente.Profesion},{paciente.Edad},{paciente.FechaDeVacunacion},{paciente.Prioridad},{paciente.Vacunado}\n";
+
+            }
+            writer.Write(csvPacientes);
+            writer.Close();
+            
         }
         // GET: ControladorPacientes
         public ActionResult Index()
@@ -123,11 +153,24 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 var paciente = new Models.Data.Paciente();
                 paciente = hashtable.GetNode(key);
                 paciente.FechaDeVacunacion = fecha;
-                lista.AddLast(paciente);
+                if (paciente.Vacunado == false)
+                {
+                    lista.AddLast(paciente);
+                }
+               
+
+               
              
             }
           
-     
+            return View(lista);
+        }
+
+        public ActionResult ListaDeVacunados()
+        {
+            
+            var lista = Singleton.Instance.ListaDeVacunados;
+         
 
             return View(lista);
         }
@@ -159,7 +202,8 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 lista.AddLast(paciente);
                 EscribirTablaPacientes(paciente);
             }
-            
+
+            calendarizado = true;
 
 
 
@@ -195,13 +239,22 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     paciente.Prioridad = node.prioridad;
                
                 }
+                if (Singleton.Instance.TablaHashPacientes.GetNodeByKey(paciente.DPI) != (null,null))
+                {
+                    MostrarDialogo("El DPI ingresado no es válido");
+                    return View();
+                }
+                else
+                {
+                    Singleton.Instance.TablaHashPacientes.Add(paciente.DPI, paciente);
+                    Singleton.Instance.MinheapPacientes.Add(node);
+                    Singleton.Instance.Buscarpaciente.AddTo(paciente, Singleton.Instance.Buscarpaciente.Root);
+                    EscribirTablaPacientes(paciente);
+                    calendarizado = false;
 
-                Singleton.Instance.TablaHashPacientes.Add(paciente.DPI, paciente);
-                Singleton.Instance.MinheapPacientes.Add(node);
-                Singleton.Instance.Buscarpaciente.AddTo(paciente, Singleton.Instance.Buscarpaciente.Root);
-                EscribirTablaPacientes(paciente);
-                
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+
+                }
 
             }
             catch
@@ -211,75 +264,126 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
         }
 
-        // GET: ControladorPacientes/Details/5
-        public ActionResult Details(int id)
+        public ActionResult VacunarPersonas()
         {
-            return View();
-        }
+            if (calendarizado == false)
+            {
+                MostrarDialogo("Debe calendarizar la vacunación de primero");
+                calendarizado = true;
+                return RedirectToAction(nameof(Index));
+            }
+            var heap = Singleton.Instance.MinheapPacientes;
+            var listaDeEspera = Singleton.Instance.ListaDeEspera;
+            var listaDeVacunados = Singleton.Instance.ListaDeVacunados;
+            var node = new PriorityNode<Paciente>();
+            foreach (Paciente paciente1 in listaDeEspera)
+            {
+                listaDeEspera.Remove(0);
+            }
 
-        // GET: ControladorPacientes/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            for (int i = 0; i < heap.elements.Count; i++)
+            {
 
-        // POST: ControladorPacientes/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
+                var paciente = heap.elements[i].Data;
+                listaDeEspera.AddLast(paciente);
+
+            }
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                for (int i = 0; i < CantidadAVacunar; i++)
+                {
+                    var temp = listaDeEspera.ElementAt(0);
+
+
+                    if (probabilidadDeAusencia() == 1)
+                    {
+                        //CASO SI EL PACIENTE NO SE PRESENTA A LA VACUNACION 
+                        temp.FechaDeVacunacion = fecha;
+                        temp.Prioridad = 12;
+                        heap.elements[0].prioridad = 12;
+                        heap.listPriority();
+                       // MostrarDialogo("Se ha reagendado la vacunación para " + temp.Nombre + " " + temp.Apellido + " para el dia " + temp.FechaDeVacunacion + "debido a que no se presentó");
+
+                        foreach (Paciente paciente1 in listaDeEspera)
+                        {
+                            listaDeEspera.Remove(0);
+                        }
+
+                        for (int j = 0; j < heap.elements.Count; j++)
+                        {
+
+                            var paciente = heap.elements[j].Data;
+                            listaDeEspera.AddLast(paciente);
+
+                        }
+
+                    }
+                    else
+                    {
+                        //EL PACIENTE SI SE PRESENTA A LA VACUNACION
+                        int index = 0;
+                        listaDeEspera.Remove(0);
+                        temp.Vacunado = true;
+                        listaDeVacunados.AddLast(temp);
+                        Singleton.Instance.TablaHashPacientes.GetNode(temp.DPI).Vacunado = true;
+
+                        if (heap.GetNode(0).Data == temp) {
+                            heap.PopMin();
+                        }
+                        else
+                        {
+                            while (heap.GetNode(index).Data != temp)
+                            {
+                                index++;
+                            }
+                            heap.Delete(heap.GetNode(index));
+                        }
+                      
+                        
+                    }
+
+                }
+                ActualizarTablaPacientes();
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(ListaDeVacunados));
             }
+
+
+            return RedirectToAction(nameof(ListaDeVacunados));
         }
 
-        // GET: ControladorPacientes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ControladorPacientes/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ControladorPacientes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ControladorPacientes/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+     
         //METODOS
+
+        public void MostrarDialogo(string message)
+        {
+            TempData["alertMessage"] = message;
+            
+        }
+
+        public int probabilidadDeAusencia()
+        {
+            //ESTE METODO SIMULA LA PROBABILIDAD DE QUE UN PACIENTE NO SE PRESENTE 
+            //ES DE PARAMETROS AJUSTABLES
+            Random random = new Random();
+            return random.Next(1, 25);
+        }
+
+        public ActionResult porcentajeDeVacunados()
+        {
+            var listaDePacientes = Singleton.Instance.ListaDeEspera.Count();
+            var listaDeVacunados = Singleton.Instance.ListaDeVacunados.Count();
+            double total = listaDeVacunados + listaDePacientes;
+            double porcentaje;
+
+            porcentaje = (listaDeVacunados / total) * 100;
+            MostrarDialogo("El porcentaje de vacunados es: " + Math.Round(porcentaje,2) + "%");
+
+            return RedirectToAction(nameof(Index));
+        }
         public int calcularprioridad(string  profesion, int Edad)
         {
             if (profesion == "Trabajador de salud")

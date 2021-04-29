@@ -40,9 +40,9 @@
 
             <p>Elija profesión</p>
 
-           
+
             <select asp-for="Profesion" title="Seleccione profesión">
-                
+
                 <option></option>
                 <option>Trabajador de salud</option>
                 <option>Estudiantes de salud</option>
@@ -55,11 +55,11 @@
                 <option>Trabajador del sector educación</option>
                 <option>Otro</option>
             </select>
-        
-           
+
+
             <span asp-validation-for="Profesion" class="text-danger"></span>
 
-         
+
             <div class="form-group">
                 <label asp-for="Edad" class="control-label"></label>
                 <input asp-for="Edad" class="form-control" />
@@ -78,4 +78,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@if (null != TempData["alertMessage"])
+{
+    <script type="text/javascript">
+       alert("@TempData["alertMessage"]");
+    </script>
 }

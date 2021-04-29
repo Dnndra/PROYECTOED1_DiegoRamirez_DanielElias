@@ -51,8 +51,11 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
             var (_, node) = GetNodeByKey(key);
 
-            if (node == null) throw
-                  new ArgumentOutOfRangeException(nameof(key), $"The key '{key}' is not found");
+            if (node == null) {
+
+                return node.Value;
+            }
+                 
             return node.Value;
         }
 
@@ -87,7 +90,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         {
             return key[0] % buckets.Length;
         }
-        protected (HashNode<T> previous, HashNode<T> current) GetNodeByKey(string key)
+        public (HashNode<T> previous, HashNode<T> current) GetNodeByKey(string key)
         {
             int position = GetBucketByKey(key);
             HashNode<T> listNode = buckets[position];
