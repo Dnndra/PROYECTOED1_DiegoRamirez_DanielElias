@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
-    public class Paciente : IComparable
+    public class Paciente : IComparable, IComparable<Paciente>
     {
 
         [Required]
@@ -28,6 +28,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public string Profesion { get; set; }
 
         [Required]
+        
         public int Edad { get; set; }
 
         public DateTime FechaDeVacunacion { get; set; }
@@ -37,8 +38,43 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public bool Vacunado { get; set; }
         public int CompareTo(object obj)
         {
-            var ordertree = ((Paciente)obj).Nombre;
-            return ordertree.CompareTo(Nombre);
+            if (obj != null && obj.GetType() != GetType())
+            {
+                throw new ArgumentException(string.Format("Object must be of type {0}", GetType()));
+            }
+
+            return CompareTo((Paciente)obj);
+
+
         }
+
+        public int CompareTo(Paciente newpaciente)
+        {
+         
+            if (this.DPI != null)
+            {
+                var pacientes = this.DPI.CompareTo(newpaciente.DPI);
+                return pacientes;
+
+            }
+            if (this.Nombre != null) {
+                var pacientes = this.Nombre.CompareTo(newpaciente.Nombre);
+
+                return pacientes;
+            }
+
+            if (this.Apellido != null)
+            {
+                var pacientes = this.Apellido.CompareTo(newpaciente.Apellido);
+                return pacientes;
+            }
+            return 0;
+        }
+           
+
+          
+        }
+
+
     }
-}
+

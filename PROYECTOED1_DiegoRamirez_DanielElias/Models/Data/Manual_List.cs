@@ -85,6 +85,21 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             }
             return false;
         }
+        public Node<T>  Nodeatposition(int pos)
+        {
+            int XD = 0;
+            current = head;
+            while (current != null)
+            {
+                if (XD == pos)
+                {
+                    return current;
+                }
+                current = this.current.Next;
+                XD++;
+            }
+            return current; 
+        }
 
 
 

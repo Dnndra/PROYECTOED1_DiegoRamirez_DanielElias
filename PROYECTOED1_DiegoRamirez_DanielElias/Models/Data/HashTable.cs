@@ -47,16 +47,22 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         public T GetNode(string key)
         {
-            ValidateKey(key);
+            if (key != "-1" )
+            {
+                ValidateKey(key);
 
-            var (_, node) = GetNodeByKey(key);
+                var (_, node) = GetNodeByKey(key);
 
-            if (node == null) {
-
+                if (node == null) throw
+                      new ArgumentOutOfRangeException(nameof(key), $"The key '{key}' is not found");
                 return node.Value;
             }
-                 
-            return node.Value;
+            var valueNode = new HashNode<T> { Key = key, Next = null };
+
+
+
+            return valueNode.Value; 
+
         }
 
         public bool Remove(string key)

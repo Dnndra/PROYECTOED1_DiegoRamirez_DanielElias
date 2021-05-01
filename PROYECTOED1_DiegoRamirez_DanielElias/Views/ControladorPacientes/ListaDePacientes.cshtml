@@ -80,9 +80,14 @@
         }
     </tbody>
 </table>
+
 @if (null != TempData["alertMessage"])
 {
     <script type="text/javascript">
        alert("@TempData["alertMessage"]");
     </script>
 }
+
+<div class="form-group">
+    <input type="submit" value="Regresar al menu" onclick="location.href='@Url.Action("Index", "ControladorPacientes")'" class="btn btn-outline-primary" />
+</div>
