@@ -1,12 +1,19 @@
 ﻿@model IEnumerable<PROYECTOED1_DiegoRamirez_DanielElias.Models.Data.Paciente>
 
 @{
-    ViewData["Title"] = "Lista de Espera";
+    ViewData["Title"] = "BuscarPersona";
 }
 
-<h1>Lista de espera</h1>
+<h1>Buscar Persona</h1>
 
+<form method="get" asp-action="BuscarPersona">
+    <p>
+        <input type="search" placeholder="Escriba nombre  o apellido o departamento o DPI" value="@ViewData["GetDev"]" name="dev" style="width:500px;" />
+        <input type="submit" value="Search" class="btn btn-outline-primary" />
+  
+    </p>
 
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +38,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Edad)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.FechaDeVacunacion)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Prioridad)
             </th>
@@ -64,21 +71,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Edad)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FechaDeVacunacion)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Prioridad)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+             
             </td>
         </tr>
 }
     </tbody>
 </table>
 <div class="form-group">
-    <input type="submit" value="Regresar al menu" onclick="location.href='@Url.Action("Index", "ControladorPacientes")'" class="btn btn-outline-primary" />
+    <input type="submit" value="Regresar Menu" onclick="location.href='@Url.Action("Index", "ControladorPacientes")'" class="btn btn-outline-primary" />
 </div>

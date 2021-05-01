@@ -26,11 +26,36 @@
                 <input asp-for="DPI" class="form-control" />
                 <span asp-validation-for="DPI" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Departamento" class="control-label"></label>
-                <input asp-for="Departamento" class="form-control" />
-                <span asp-validation-for="Departamento" class="text-danger"></span>
-            </div>
+
+            <p>Elija departamento</p>
+            <select asp-for="Departamento" title=" Seleccione departamento">
+                <option></option>
+                <option>Alta Verapaz</option>
+                <option>Baja Verapaz</option>
+                <option> Chimaltenango</option>
+                <option>Chiquimula</option>
+                <option> El Progreso</option>
+                <option>Escuintla</option>
+                <option>Guatemala</option>
+                <option>Huehuetenango</option>
+                <option>Izabal</option>
+                <option>Jalapa</option>
+                <option>Jutiapa</option>
+                <option>Petén</option>
+                <option>Quetzaltenango</option>
+                <option>Quiché</option>
+                <option> Retalhuleu</option>
+                <option> Sacatepéquez</option>
+                <option>San Marcos</option>
+                <option>Santa Rosa</option>
+                <option>Sololá</option>
+                <option>Suchitepéquez</option>
+                <option> Totonicapán</option>
+                <option> Zacapa</option>
+
+
+
+            </select>
             <div class="form-group">
                 <label asp-for="Municipio" class="control-label"></label>
                 <input asp-for="Municipio" class="form-control" />
@@ -40,9 +65,9 @@
 
             <p>Elija profesión</p>
 
-           
+
             <select asp-for="Profesion" title="Seleccione profesión">
-                
+
                 <option></option>
                 <option>Trabajador de salud</option>
                 <option>Estudiantes de salud</option>
@@ -54,12 +79,13 @@
                 <option>Trabajador del sector justicia</option>
                 <option>Trabajador del sector educación</option>
                 <option>Otro</option>
+
             </select>
-        
-           
+
+
             <span asp-validation-for="Profesion" class="text-danger"></span>
 
-         
+
             <div class="form-group">
                 <label asp-for="Edad" class="control-label"></label>
                 <input asp-for="Edad" class="form-control" />
