@@ -82,9 +82,8 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                         node.Data = nuevoPaciente;
                         node.prioridad = nuevoPaciente.Prioridad;
                         Singleton.Instance.TablaHashPacientes.Add(nuevoPaciente.DPI, nuevoPaciente);
-                        Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente, Singleton.Instance.Buscarpaciente.Root);
+
                         csvPacientes += $"{fields[0]},{fields[1]},{fields[2]},{fields[3]},{fields[4]},{fields[5]},{fields[6]},{fields[7]},{fields[8]},{fields[9]}\n";               
-                        Singleton.Instance.MinheapPacientes.Add(node);
                         Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente4, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.Buscarpaciente.Root, nuevoPaciente.DPI,""); ;
                         Singleton.Instance.BuscarNombre.AddTo(nuevoPaciente2, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.BuscarNombre.Root, nuevoPaciente.DPI,"");
                         Singleton.Instance.BuscarApellido.AddTo(nuevoPaciente3, nuevoPaciente2.Nombre, nuevoPaciente3.Apellido, Singleton.Instance.BuscarApellido.Root, nuevoPaciente.DPI,"");
@@ -151,7 +150,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
         {
 
             var lista = Singleton.Instance.ListaDeEspera;
-            var comparer = new PriorityNode<Paciente>();
+            
             var heap = Singleton.Instance.MinheapPacientes;
             var hashtable = Singleton.Instance.TablaHashPacientes;
 
