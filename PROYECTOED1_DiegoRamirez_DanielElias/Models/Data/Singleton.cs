@@ -22,6 +22,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         private Singleton()
         {
             ListaDeEspera = new Manual_List<Paciente>();
+            ListaDeVacunados = new Manual_List<Paciente>();
             TablaHashPacientes = new HashTable<Paciente>(10);
             MinheapPacientes = new MinHeap<Paciente>();
             Buscarpaciente = new AVLTree<Paciente>();

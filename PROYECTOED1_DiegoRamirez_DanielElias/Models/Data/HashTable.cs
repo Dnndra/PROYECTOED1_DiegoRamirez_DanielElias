@@ -59,7 +59,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             }
             var valueNode = new HashNode<T> { Key = key, Next = null };
 
+
+
             return valueNode.Value; 
+
         }
 
         public bool Remove(string key)
@@ -93,7 +96,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         {
             return key[0] % buckets.Length;
         }
-        protected (HashNode<T> previous, HashNode<T> current) GetNodeByKey(string key)
+        public (HashNode<T> previous, HashNode<T> current) GetNodeByKey(string key)
         {
             int position = GetBucketByKey(key);
             HashNode<T> listNode = buckets[position];

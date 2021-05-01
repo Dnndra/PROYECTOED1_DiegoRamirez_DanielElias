@@ -1,10 +1,9 @@
-Diego,Ramírez,23455230,Guatemala,Guatemala,Trabajador de salud,19,3/10/2021 8:00:00 AM,1
-Alejandro,R,3242350,Guatemala,Guatemala,Trabajador de salud,43,3/10/2021 8:00:00 AM,1
-Daniel,velasquez,1234,Alta Verapaz,XD,Trabajador de salud,4,3/10/2021 8:00:00 AM,1
-cepillin,Elias,15789514,Totonicapán,JAJAJAJ,Estudiantes de salud,23,3/11/2021 8:00:00 AM,2
-Jose,Lopez,4273864232,Guatemala,Guatemala,Cuidador de adultos mayores,18,3/11/2021 8:00:00 AM,3
-Pedro,Ramírez,23455233,Guatemala,Guatemala,Seguridad nacional,32,3/11/2021 8:00:00 AM,3
-Miguelito,Lopez,123765769,Guatemala,Guatemala,Otro,70,3/12/2021 8:00:00 AM,4
-Daniel,Elias,23455234,Guatemala,Guatemala,Trabajador de funeraria,20,3/12/2021 8:00:00 AM,6
-Pedro,Elias,23455231,Guatemala,Guatemala,Otro,21,3/12/2021 8:00:00 AM,11
-Adrian,Ramírez,23455227,Guatemala,Guatemala,Otro,19,3/13/2021 8:00:00 AM,11
+
+Diego,Ramírez,23455234,Guatemala,Guatemala,Trabajador de salud,23,10/03/2021 08:00:00,1,False
+Pedro,Alegria,4273864232,Guatemala,Guatemala,Cuidador de adultos mayores,43,10/03/2021 08:00:00,3,False
+Miguelito,Elias,3242350,Guatemala,Guatemala,Cuidador de adultos mayores,43,10/03/2021 08:00:00,3,False
+Daniel,Ramírez,23455227,Guatemala,Guatemala,Cuerpos de socorro,21,11/03/2021 08:00:00,3,False
+Jose,Alegria,98098798,Guatemala,Guatemala,Otro,70,11/03/2021 08:00:00,4,False
+Sebastian,R,42387923214,Guatemala,Guatemala,Trabajador del sector educación,21,11/03/2021 08:00:00,8,False
+Pedro,Lopez,346872111,Guatemala,Guatemala,Trabajador del sector justicia,32,12/03/2021 08:00:00,9,False
+Adrian,Lopez,4238792321,Guatemala,Guatemala,Trabajador del sector justicia,32,12/03/2021 08:00:00,9,False
