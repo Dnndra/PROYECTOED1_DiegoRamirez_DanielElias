@@ -101,8 +101,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             return current; 
         }
 
-
-
+        
 
         private Manual_List<T>.LinkedListEnumerator GetEnumerator()
         {

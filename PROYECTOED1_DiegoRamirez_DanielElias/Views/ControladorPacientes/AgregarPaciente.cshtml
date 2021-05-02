@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Agregar Paciente";
 }
-
+<head>
+    <meta charset="utf-8">
+</head>
 <h1>Agregar Paciente</h1>
 
 <hr />
@@ -28,39 +30,50 @@
             </div>
 
             <p>Elija departamento</p>
-            <select asp-for="Departamento" title=" Seleccione departamento">
-                <option></option>
-                <option>Alta Verapaz</option>
-                <option>Baja Verapaz</option>
-                <option> Chimaltenango</option>
-                <option>Chiquimula</option>
-                <option> El Progreso</option>
-                <option>Escuintla</option>
-                <option>Guatemala</option>
-                <option>Huehuetenango</option>
-                <option>Izabal</option>
-                <option>Jalapa</option>
-                <option>Jutiapa</option>
-                <option>Petén</option>
-                <option>Quetzaltenango</option>
-                <option>Quiché</option>
-                <option> Retalhuleu</option>
-                <option> Sacatepéquez</option>
-                <option>San Marcos</option>
-                <option>Santa Rosa</option>
-                <option>Sololá</option>
-                <option>Suchitepéquez</option>
-                <option> Totonicapán</option>
-                <option> Zacapa</option>
+            <select id="ddlregion" name="RegionId"asp-for="Departamento" title=" Seleccione departamento">
+                <option value="0"></option>
+                <option value="1">Alta Verapaz</option>
+                <option value="2">Baja Verapaz</option>
+                <option value="3"> Chimaltenango</option>
+                <option value="4">Chiquimula</option>
+                <option value="5"> El Progreso</option>
+                <option value="6">Escuintla</option>
+                <option value="7">Guatemala</option>
+                <option value="8">Huehuetenango</option>
+                <option value="9">Izabal</option>
+                <option value="10">Jalapa</option>
+                <option value="11">Jutiapa</option>
+                <option value="12">Petén</option>
+                <option value="13">Quetzaltenango</option>
+                <option value="14">Quiché</option>
+                <option value="15"> Retalhuleu</option>
+                <option value="16"> Sacatepéquez</option>
+                <option value="17">San Marcos</option>
+                <option value="18">Santa Rosa</option>
+                <option value="19">Sololá</option>
+                <option value="20">Suchitepéquez</option>
+                <option value="21"> Totonicapán</option>
+                <option value="22"> Zacapa</option>
 
 
 
             </select>
+            <p> Elija  municipio</p>
             <div class="form-group">
-                <label asp-for="Municipio" class="control-label"></label>
-                <input asp-for="Municipio" class="form-control" />
-                <span asp-validation-for="Municipio" class="text-danger"></span>
+                <select class="form-select" asp-for="Municipio">
+                    <option></option>
+                    @foreach (var item in PROYECTOED1_DiegoRamirez_DanielElias.Models.Data.Singleton.Instance.muncipios)
+                    {
+
+                        <option value="@item">@Html.DisplayFor(modelItem => item)</option>
+                    }
+                </select>
             </div>
+
+     
+          
+          
+
 
 
             <p>Elija profesión</p>

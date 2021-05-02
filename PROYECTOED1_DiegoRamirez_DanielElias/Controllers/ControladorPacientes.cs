@@ -11,6 +11,7 @@ using Microsoft.VisualBasic.FileIO;
 
 
 using PROYECTOED1_DiegoRamirez_DanielElias.Models.Data;
+using System.Text;
 
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 {
@@ -23,6 +24,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
         public static int contador = 0;
         public static string csvPacientes = "";
+        public static string csvMunicipios = "";
         public static bool cargaInicial = false;
         public static bool calendarizado = false;
         //hosting environment
@@ -33,6 +35,48 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
         }
 
+        public void leerMunicipios()
+        {
+            try
+            {
+                string[] lines = System.IO.File.ReadAllLines($"{hostingEnvironment.WebRootPath}\\csv\\Municipios.csv");
+                TextReader reader = new StreamReader($"{hostingEnvironment.WebRootPath}\\csv\\Municipios.csv" );
+                TextFieldParser csvReader = new TextFieldParser(reader);
+                csvReader.TextFieldType = Microsoft.VisualBasic.FileIO.FieldType.Delimited;
+                csvReader.SetDelimiters(",");
+                csvReader.HasFieldsEnclosedInQuotes = true;
+                string[] fields;
+                while (!csvReader.EndOfData)
+                {
+                    try
+                    {
+                        fields = csvReader.ReadFields();
+                        var nuevoPaciente = new Paciente();
+
+                        nuevoPaciente.Municipio = fields[0];
+
+
+
+                        csvMunicipios += $"{fields[0]}";
+
+
+
+                        Singleton.Instance.muncipios.AddLast(nuevoPaciente.Municipio);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+          
+                reader.Close();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public void LeerTablaPacientes()
         {
             try
@@ -140,6 +184,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             if (cargaInicial == false)
             {
                 LeerTablaPacientes();
+                leerMunicipios();
                 cargaInicial = true;
             }
             

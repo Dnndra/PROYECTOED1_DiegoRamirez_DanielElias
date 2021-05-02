@@ -17,7 +17,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public Manual_List<Paciente> ListaDeVacunados;
         public AVLTree<Paciente> BuscarNombre;
         public AVLTree<Paciente> BuscarApellido;
-
+        public Manual_List<String> muncipios;
         
         private Singleton()
         {
@@ -27,7 +27,8 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             MinheapPacientes = new MinHeap<Paciente>();
             Buscarpaciente = new AVLTree<Paciente>();
             BuscarNombre = new AVLTree<Paciente>();
-            BuscarApellido = new AVLTree<Paciente>(); 
+            BuscarApellido = new AVLTree<Paciente>();
+            muncipios = new Manual_List<String>();
         }
 
 
