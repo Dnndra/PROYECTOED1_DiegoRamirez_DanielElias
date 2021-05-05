@@ -7,40 +7,48 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
     public class AVLTree<T> where T : IComparable
     {
+        public Manual_List<string> elementos;
+
         public AVLTreeNode<T> Root { get; internal set; }
         public  AVLTreeNode<T> NotFound { get; internal set; }
-        public void AddTo(T value,string nombre, string apellido, AVLTreeNode<T> current, string DPI, string encontrado)
+     
+        public void AddTo(T value,string nombre, string apellido, AVLTreeNode<T> current, string DPI)
         {
+
+          
             if (Root == null)
             {
-                Root = new AVLTreeNode<T>(value, null, this, nombre, apellido, DPI);
+                Root = new AVLTreeNode<T>(value, null, this, nombre, apellido, DPI,elementos = new Manual_List<string>());
+                Root.Treelist.AddLast(DPI);
                 return;
             }
             if (current.Data.CompareTo(value) == 0)
             {
-
+                current.Treelist.AddLast(DPI);
                 return;
             }
             if (current.Data.CompareTo(value) < 0)
             {
                 if (current.Left == null)
                 {
-                    current.Left = new AVLTreeNode<T>(value, current, this, nombre,apellido,DPI );
+                    current.Left = new AVLTreeNode<T>(value, current, this, nombre,apellido,DPI, elementos = new Manual_List<string>());
+                    current.Left.Treelist.AddLast(DPI);
                 }
                 else
                 {
-                    AddTo(value,nombre,apellido, current.Left, DPI, encontrado);
+                    AddTo(value,nombre,apellido, current.Left, DPI);
                 }
             }
             else
             {
                 if (current.Right == null)
                 {
-                    current.Right = new AVLTreeNode<T>(value, current, this, nombre,apellido, DPI);
+                    current.Right = new AVLTreeNode<T>(value, current, this, nombre,apellido, DPI, elementos = new Manual_List<string>());
+                    current.Right.Treelist.AddLast(DPI);
                 }
                 else
                 {
-                    AddTo(value,nombre,apellido, current.Right, DPI,encontrado);
+                    AddTo(value,nombre,apellido, current.Right, DPI);
                 }
             }
 
@@ -113,7 +121,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                 {
 
 
-                    NotFound = new AVLTreeNode<T>(value, null, this, "", "", notfound);
+                    NotFound = new AVLTreeNode<T>(value, null, this, "", "", notfound,null);
                     return NotFound;
                 }
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using PROYECTOED1_DiegoRamirez_DanielElias.Models.Data;
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
     public class AVLTreeNode<T> where T : IComparable
@@ -14,7 +14,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         private AVLTreeNode<T> right;
         internal AVLTree<T> Tree;
 
-        public AVLTreeNode(T value, AVLTreeNode<T> parent, AVLTree<T> tree, string Name, string Apellido, string Dpi)
+        public AVLTreeNode(T value, AVLTreeNode<T> parent, AVLTree<T> tree, string Name, string Apellido, string Dpi, Manual_List<string> treelist)
         {
             Data = value;
             Parent = parent;
@@ -22,7 +22,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             apellido = Apellido;
             name = Name;
             DPI = Dpi;
-         
+            Treelist = treelist;
      
         }
 
@@ -32,7 +32,8 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public string DPI { get; set; }
         public string name {get; set;}
         public string apellido { get; set; }
-        public string Encontrado { get; set; }
+
+        public Manual_List<string> Treelist { get; set; }
 
      
         public AVLTreeNode<T> Left
