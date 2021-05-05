@@ -173,9 +173,9 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                       
 
                         csvPacientes += $"{fields[0]},{fields[1]},{fields[2]},{fields[3]},{fields[4]},{fields[5]},{fields[6]},{fields[7]},{fields[8]},{fields[9]}\n";               
-                        Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente4, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.Buscarpaciente.Root, nuevoPaciente.DPI,""); ;
-                        Singleton.Instance.BuscarNombre.AddTo(nuevoPaciente2, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.BuscarNombre.Root, nuevoPaciente.DPI,"");
-                        Singleton.Instance.BuscarApellido.AddTo(nuevoPaciente3, nuevoPaciente2.Nombre, nuevoPaciente3.Apellido, Singleton.Instance.BuscarApellido.Root, nuevoPaciente.DPI,"");
+                        Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente4, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.Buscarpaciente.Root, nuevoPaciente.DPI); ;
+                        Singleton.Instance.BuscarNombre.AddTo(nuevoPaciente2, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.BuscarNombre.Root, nuevoPaciente.DPI);
+                        Singleton.Instance.BuscarApellido.AddTo(nuevoPaciente3, nuevoPaciente2.Nombre, nuevoPaciente3.Apellido, Singleton.Instance.BuscarApellido.Root, nuevoPaciente.DPI);
                      
 
                     }
@@ -309,32 +309,32 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
         public ActionResult BuscarPersona(string dev)
         {
             ViewData["GetDev"] = dev;
-            var lista = Singleton.Instance.ListaDeEspera;
-            var paciente1 = new Models.Data.Paciente();
-            var paciente3 = new Models.Data.Paciente();
-            var paciente4 = new Models.Data.Paciente();
+            var lista = Singleton.Instance.Listabuscar;
+            var pacienteDpi = new Models.Data.Paciente();
+            var pacienteapellido = new Models.Data.Paciente();
+            var pacientenombre = new Models.Data.Paciente();
            
  
-            paciente1.DPI = dev;
-            paciente3.Apellido = dev;
-            paciente4.Nombre = dev;
+            pacienteDpi.DPI = dev;
+            pacienteapellido.Apellido = dev;
+            pacientenombre.Nombre = dev;
             Paciente selectedDPI;
             Paciente selectedName;
+            Paciente selectApellido;
 
-        
-
+            foreach (Paciente paciente5 in lista)
+            {
+                lista.Remove(0);
+            }
             if (!string.IsNullOrEmpty(dev))
 
             {
-                foreach (Paciente paciente5 in lista)
-                {
-                    lista.Remove(0);
-                }
+             
                 //búsqueda por DPI
-                var selectedbuscadordpi= Singleton.Instance.Buscarpaciente.find(paciente1, "-1", Singleton.Instance.Buscarpaciente.Root );
+                var selectedbuscadordpi= Singleton.Instance.Buscarpaciente.find(pacienteDpi, "-1", Singleton.Instance.Buscarpaciente.Root );
                 if (selectedbuscadordpi.DPI != "-1")
                 {
-                
+              
                         selectedDPI = Singleton.Instance.TablaHashPacientes.GetNode(selectedbuscadordpi.DPI);
                         lista.AddLast(selectedDPI);
 
@@ -343,21 +343,28 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 }
                 // búsqueda por apellido
 
-                var selectedbuscadorapellido = Singleton.Instance.BuscarApellido.find(paciente3, "-1", Singleton.Instance.BuscarApellido.Root);
+                var selectedbuscadorapellido = Singleton.Instance.BuscarApellido.find(pacienteapellido, "-1", Singleton.Instance.BuscarApellido.Root);
                 if (selectedbuscadorapellido.DPI != "-1")
                 {
-                    selectedName = Singleton.Instance.TablaHashPacientes.GetNode(selectedbuscadorapellido.DPI);
-
-                    lista.AddLast(selectedName);
+                    foreach (string dpi in selectedbuscadorapellido.Treelist)
+                    {
+                        selectApellido = Singleton.Instance.TablaHashPacientes.GetNode(dpi);
+                        lista.AddLast(selectApellido);
+                    }
+                   
                     return View(lista);
                 }
-                    //busquedapor  nombre
-                var selectedbuscadornombre = Singleton.Instance.BuscarNombre.find(paciente4, "-1", Singleton.Instance.BuscarNombre.Root);
+                    //busqueda por  nombre
+                var selectedbuscadornombre = Singleton.Instance.BuscarNombre.find(pacientenombre, "-1", Singleton.Instance.BuscarNombre.Root);
                 if (selectedbuscadornombre.DPI != "-1")
                 {
-                    selectedName = Singleton.Instance.TablaHashPacientes.GetNode(selectedbuscadornombre.DPI);
-
-                    lista.AddLast(selectedName);
+                    foreach (string dpi in selectedbuscadornombre.Treelist)
+                    {
+                        selectedName = Singleton.Instance.TablaHashPacientes.GetNode(dpi);
+                        
+                        lista.AddLast(selectedName);
+                    }
+                  
                     return View(lista);
                 }
           
@@ -455,6 +462,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
                     Singleton.Instance.TablaHashPacientes.Add(paciente.DPI, paciente);
 
+
                     if (paciente.Municipio == municipiologgeado)
                     {
                         Singleton.Instance.MinheapPacientes.Add(paciente);
@@ -472,6 +480,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     Singleton.Instance.BuscarApellido.AddTo(paciente3, paciente2.Nombre, paciente3.Apellido, Singleton.Instance.BuscarApellido.Root, paciente.DPI, "");
                     ActualizarTablaPacientes();
                     LeerTablaPacientes();
+
                     calendarizado = false;
 
 
