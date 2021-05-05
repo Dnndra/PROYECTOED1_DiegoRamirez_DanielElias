@@ -4,13 +4,15 @@
     ViewData["Title"] = "BuscarPersona";
 }
 
+
+<h1>Vacunación COVID-19 @PROYECTOED1_DiegoRamirez_DanielElias.Controllers.ControladorPacientes.municipiologgeado</h1>
 <h1>Buscar Persona</h1>
 
 <form method="get" asp-action="BuscarPersona">
     <p>
         <input type="search" placeholder="Escriba nombre  o apellido o departamento o DPI" value="@ViewData["GetDev"]" name="dev" style="width:500px;" />
         <input type="submit" value="Search" class="btn btn-outline-primary" />
-  
+
     </p>
 
 </form>
@@ -48,40 +50,40 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DPI)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Municipio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profesion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaDeVacunacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prioridad)
-            </td>
-            <td>
-             
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DPI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Municipio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaDeVacunacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prioridad)
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <div class="form-group">

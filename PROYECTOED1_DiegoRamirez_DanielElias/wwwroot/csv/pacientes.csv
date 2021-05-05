@@ -1,11 +1,12 @@
-Daniel,Ramírez,23455227,Guatemala,Mixco,Cuerpos de socorro,21,11/03/2021 08:00:00,3,False
-Jose,Alegria,98098798,Guatemala,Mixco,Otro,70,11/03/2021 08:00:00,4,False
-Sebastian,R,42387923214,Guatemala,Guatemala,Trabajador del sector educación,21,11/03/2021 08:00:00,8,False
-Adrian,Lopez,4238792321,Guatemala,Guatemala,Trabajador del sector justicia,32,12/03/2021 08:00:00,9,False
-Pedro,Lopez,346872111,Guatemala,Guatemala,Trabajador del sector justicia,32,12/03/2021 08:00:00,9,False
-Diego,Ramírez,23455234,Guatemala,Guatemala,Trabajador de salud,23,10/03/2021 08:00:00,1,True
-Pedro,Alegria,4273864232,Guatemala,Guatemala,Cuidador de adultos mayores,43,10/03/2021 08:00:00,3,True
-Miguelito,Elias,3242350,Guatemala,Guatemala,Cuidador de adultos mayores,43,10/03/2021 08:00:00,3,True
-jUANITO,Elias,1234,Chiquimula,Chisec,Cuerpos de socorro,14,1/1/0001 12:00:00 AM,3,False
-Daniel,Guerra,41568,,Chahal,Trabajador de funeraria,55,1/1/0001 12:00:00 AM,3,False
-Diego,marto,5364567345,,Cubulco.,Cuerpos de socorro,45,1/1/0001 12:00:00 AM,3,False
+Diego,Ram�rez,23455234,Guatemala,Guatemala,Trabajador de salud,23,10/03/2021 08:00:00,1,False
+Pedro,Alegria,4273864232,Guatemala,Guatemala,Cuidador de adultos mayores,43,10/03/2021 08:00:00,3,False
+Miguelito,Elias,3242350,Guatemala,Guatemala,Cuidador de adultos mayores,43,10/03/2021 08:00:00,3,False
+Sebastian,R,42387923214,Guatemala,Guatemala,Trabajador del sector educaci�n,21,11/03/2021 08:00:00,8,False
+Adrian,Lopez,4238792321,Guatemala,Guatemala,Trabajador del sector justicia,32,11/03/2021 08:00:00,9,False
+Pedro,Lopez,346872111,Guatemala,Guatemala,Trabajador del sector justicia,32,11/03/2021 08:00:00,9,False
+Lionel,Messi,98765432,,Guatemala,Estudiantes de salud,21,1/01/0001 00:00:00,2,False
+Andres,Pulido,67098765,,Chisec,Estudiantes de salud,21,10/03/2021 08:00:00,2,False
+jUANITO,Elias,1234,Chiquimula,Chisec,Cuerpos de socorro,14,10/03/2021 08:00:00,12,True
+Daniel,Ram�rez,23455227,Guatemala,Mixco,Cuerpos de socorro,21,10/03/2021 08:00:00,3,False
+Jose,Alegria,98098798,Guatemala,Mixco,Otro,70,10/03/2021 08:00:00,4,False
+

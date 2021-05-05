@@ -50,7 +50,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ControladorPacientes}/{action=Index}/{id?}");
+                    pattern: "{controller=ControladorPacientes}/{action=LoginMunicipio}/{id?}");
             });
         }
     }

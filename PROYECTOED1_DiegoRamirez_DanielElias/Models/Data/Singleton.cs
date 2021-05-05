@@ -19,12 +19,8 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public AVLTree<Paciente> BuscarApellido;
         public Manual_List<String> muncipios;
         public Manual_List<Paciente> Listabuscar;  
-
-
-
-     
-
-
+        public Manual_List<Paciente> ListaAuxiliar;
+        
 
 
         private Singleton()
@@ -38,6 +34,11 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             BuscarApellido = new AVLTree<Paciente>();
             muncipios = new Manual_List<String>();
             Listabuscar = new Manual_List<Paciente>();
+            ListaAuxiliar = new Manual_List<Paciente>();
+
+
+
+
 
 
         }
