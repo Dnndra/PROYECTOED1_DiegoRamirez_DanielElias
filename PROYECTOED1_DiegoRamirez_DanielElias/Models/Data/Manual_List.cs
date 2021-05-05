@@ -17,7 +17,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             this.Previous = previous;
         }
     }
-    public class Manual_List<T> : IEnumerable<T>, IEnumerable
+    public class Manual_List<T> :IEnumerable<T> where T :IComparable
 
     {
         private Node<T> head;
@@ -50,7 +50,34 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                 this.Length++;
             }
         }
+        public void swap(int pos1, int pos2)
+        {
+            Node<T> current = head;
+            if  (pos1 == pos2)
+            {
+                return; 
+            }
+            int cont = 0; 
+            var  node1 = Nodeatposition(pos1).Data;
+            var node2 = Nodeatposition(pos2).Data;
+            while (current != null)
+            {
+                if  (pos1 == cont)
+                {
+                    current.Data = node2;
 
+                }
+                if (pos2 == cont)
+                {
+                    current.Data = node1;
+                }
+                current = current.Next;
+                cont++;
+            }
+            return;
+        
+        }
+        
 
         public bool Remove(int pos)
         {
@@ -88,20 +115,39 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public Node<T>  Nodeatposition(int pos)
         {
             int XD = 0;
-            current = head;
-            while (current != null)
+           Node<T> Current = head;
+            if  (head == null)
+            {
+                return head; 
+            }
+            while (Current != null)
             {
                 if (XD == pos)
                 {
-                    return current;
+                    return Current;
                 }
-                current = this.current.Next;
+                Current = Current.Next;
                 XD++;
             }
-            return current; 
+            return Current; 
         }
 
-        
+        public  int getpositionNode(T value)
+        {
+            Node<T> current = head;
+            int cont = 0; 
+            while (current != null )
+            {
+                if (current.Data.CompareTo(value)== 0)
+                {
+                    return cont;
+                }
+                current = current.Next;
+                cont++;
+            }
+            return -1;
+        }
+     
 
         private Manual_List<T>.LinkedListEnumerator GetEnumerator()
         {
