@@ -14,13 +14,12 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         private AVLTreeNode<T> right;
         internal AVLTree<T> Tree;
 
-        public AVLTreeNode(T value, AVLTreeNode<T> parent, AVLTree<T> tree, string Name, string Apellido, string Dpi, Manual_List<string> treelist)
+        public AVLTreeNode(T value, AVLTreeNode<T> parent, AVLTree<T> tree, string Dpi, Manual_List<string> treelist)
         {
             Data = value;
             Parent = parent;
             Tree = tree;
-            apellido = Apellido;
-            name = Name;
+       
             DPI = Dpi;
             Treelist = treelist;
      
@@ -30,8 +29,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         public T Data { get; set; }
         public string DPI { get; set; }
-        public string name {get; set;}
-        public string apellido { get; set; }
+
 
         public Manual_List<string> Treelist { get; set; }
 

@@ -5,12 +5,7 @@ using System.Threading.Tasks;
 using PROYECTOED1_DiegoRamirez_DanielElias.Models.Data;
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
-    public class PriorityNode<T> 
-    {
-        public PriorityNode<T> Next { get; set; }
-        public int prioridad;
-        public T Data { get; set; }
-    }
+ 
     public class MinHeap<T> where T :IComparable
     {
        

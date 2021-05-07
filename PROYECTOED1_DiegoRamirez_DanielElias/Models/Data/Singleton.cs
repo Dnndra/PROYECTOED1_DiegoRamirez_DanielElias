@@ -27,7 +27,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         {
             ListaDeEspera = new Manual_List<Paciente>();
             ListaDeVacunados = new Manual_List<Paciente>();
-            TablaHashPacientes = new HashTable<Paciente>(10);
+            TablaHashPacientes = new HashTable<Paciente>(10); 
             MinheapPacientes = new MinHeap<Paciente>();
             Buscarpaciente = new AVLTree<Paciente>();
             BuscarNombre = new AVLTree<Paciente>();
@@ -35,12 +35,6 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             muncipios = new Manual_List<String>();
             Listabuscar = new Manual_List<Paciente>();
             ListaAuxiliar = new Manual_List<Paciente>();
-
-
-
-
-
-
         }
 
 

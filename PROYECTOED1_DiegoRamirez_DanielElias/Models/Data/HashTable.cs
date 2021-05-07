@@ -53,8 +53,8 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
                 var (_, node) = GetNodeByKey(key);
 
-                if (node == null) throw
-                      new ArgumentOutOfRangeException(nameof(key), $"The key '{key}' is not found");
+               
+                    
                 return node.Value;
             }
             var valueNode = new HashNode<T> { Key = key, Next = null };

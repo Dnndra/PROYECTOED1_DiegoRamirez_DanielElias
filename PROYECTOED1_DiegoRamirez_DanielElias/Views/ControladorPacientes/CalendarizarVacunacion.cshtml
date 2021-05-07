@@ -8,9 +8,7 @@
 <h1>Vacunación COVID-19 @PROYECTOED1_DiegoRamirez_DanielElias.Controllers.ControladorPacientes.municipiologgeado</h1>
 <h1>Calendarizar Vacunacion</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -76,14 +74,15 @@
                     @Html.DisplayFor(modelItem => item.Prioridad)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<div class="form-group">
+    <input type="submit" value="Regresar al menu" onclick="location.href='@Url.Action("Index", "ControladorPacientes")'" class="btn btn-outline-primary" />
+</div>
 @if (null != TempData["alertMessage"])
 {
     <script type="text/javascript">

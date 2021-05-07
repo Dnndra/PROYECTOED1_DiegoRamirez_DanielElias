@@ -27,6 +27,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
         public static bool calendarizado = false;
         public static bool dialogoMostrado = false;
         public static bool reloggeado = false;
+        public static bool relog = false;
         //hosting environment
         IWebHostEnvironment hostingEnvironment;
         public ControladorPacientes(IWebHostEnvironment hostingEnvironment)
@@ -35,15 +36,17 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
         }
         [HttpGet]
+        //metodo para cambiar de  municipio
         public ActionResult ReLoggear()
         {
    
 
-
+            
             reloggeado = true;
             return RedirectToAction(nameof(LoginMunicipio));
             
         }
+        //metodo para seleccionar municipio
         public ActionResult LoginMunicipio()
         {
             leerMunicipios();
@@ -108,6 +111,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 throw new Exception(e.Message);
             }
         }
+        //METODO PARA CARGAR LAS ESTRUCTURAS CON LOS DATOS DEL CSV
         public void LeerTablaPacientes()
         {
             try
@@ -124,12 +128,16 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     try
                     {
                         fields = csvReader.ReadFields();
+                        //PACIENTE CON TODOS LOS  DATOS
                         var nuevoPaciente = new Paciente();
+                        //PACIENTE SOLO CON NOMBRE
                         var nuevoPaciente2 = new Paciente();
+                        //PACIENTE  SOLO CON APELLIDO
                         var nuevoPaciente3 = new Paciente();
+                        //PACIENTE  SOLO CON DPI 
                         var nuevoPaciente4 = new Paciente();
                        
-                        var node = new Models.Data.PriorityNode<Models.Data.Paciente>();
+                
                         nuevoPaciente.Nombre = fields[0];
                         nuevoPaciente2.Nombre = fields[0]; 
                         nuevoPaciente.Apellido = fields[1];
@@ -143,17 +151,16 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                         nuevoPaciente.FechaDeVacunacion = Convert.ToDateTime(fields[7]);
                         nuevoPaciente.Prioridad = Convert.ToInt32(fields[8]);
                         nuevoPaciente.Vacunado = Convert.ToBoolean(fields[9]);
-                        node.Data = nuevoPaciente;
-                        node.prioridad = nuevoPaciente.Prioridad;
-
-                        if (nuevoPaciente.Vacunado == false && node.Data.Municipio == municipiologgeado)
+                   
+                        //COMPRUEBA SI ESTA VACUNADO Y COMPRUEBA  MUNICIPIO
+                        if (nuevoPaciente.Vacunado == false && nuevoPaciente.Municipio == municipiologgeado)
                         {
 
                             Singleton.Instance.MinheapPacientes.Add(nuevoPaciente);
                             Singleton.Instance.ListaDeEspera.AddLast(nuevoPaciente);
 
                         }
-                        else if(nuevoPaciente.Vacunado == true && node.Data.Municipio == municipiologgeado)
+                        else if(nuevoPaciente.Vacunado == true && nuevoPaciente.Municipio == municipiologgeado)
                         {
                             Singleton.Instance.ListaDeVacunados.AddLast(nuevoPaciente);
                         }
@@ -161,21 +168,29 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                         {
                             Singleton.Instance.ListaAuxiliar.AddLast(nuevoPaciente);
                         }
+
                         if (reloggeado == true)
                         {
                             reloggeado = false;
+                           
                         }
-                        else
+                        //agrega a la hashtable  y  a los arboles
+                        if (relog == false)
                         {
+
                             Singleton.Instance.TablaHashPacientes.Add(nuevoPaciente.DPI, nuevoPaciente);
+                            Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente4,  Singleton.Instance.Buscarpaciente.Root, nuevoPaciente.DPI);
+                            Singleton.Instance.BuscarNombre.AddTo(nuevoPaciente2, Singleton.Instance.BuscarNombre.Root, nuevoPaciente.DPI);
+                            Singleton.Instance.BuscarApellido.AddTo(nuevoPaciente3,  Singleton.Instance.BuscarApellido.Root, nuevoPaciente.DPI);
                         }
-                        
-                      
+
+
+
+
+
 
                         csvPacientes += $"{fields[0]},{fields[1]},{fields[2]},{fields[3]},{fields[4]},{fields[5]},{fields[6]},{fields[7]},{fields[8]},{fields[9]}\n";               
-                        Singleton.Instance.Buscarpaciente.AddTo(nuevoPaciente4, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.Buscarpaciente.Root, nuevoPaciente.DPI); ;
-                        Singleton.Instance.BuscarNombre.AddTo(nuevoPaciente2, nuevoPaciente.Nombre, nuevoPaciente.Apellido, Singleton.Instance.BuscarNombre.Root, nuevoPaciente.DPI);
-                        Singleton.Instance.BuscarApellido.AddTo(nuevoPaciente3, nuevoPaciente2.Nombre, nuevoPaciente3.Apellido, Singleton.Instance.BuscarApellido.Root, nuevoPaciente.DPI);
+                  
                      
 
                     }
@@ -184,6 +199,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
                     }
                 }
+                relog = true;
                 Singleton.Instance.MinheapPacientes.Heapify();
                 reader.Close();
 
@@ -193,6 +209,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 throw new Exception(e.Message);
             }
         }
+        //METODO QUE ESCRIBE EN EL CSV
         void EscribirTablaPacientes(Paciente paciente)
         {
 
@@ -202,7 +219,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             writer.Write(csvPacientes);
             writer.Close();
         }
-
+        //METODO PARA REINICIAR  ESTRUCTURAS
         void ActualizarTablaPacientes()
         {
             
@@ -248,19 +265,22 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
           
             
         }
-        // GET: ControladorPacientes
+       
+        //VISTA DEL MENU
         public ActionResult Index()
         {
+            //CARGA DE  PACIENTES DESDE ARCHIVO
             if (cargaInicial == false)
             {
                 LeerTablaPacientes();
                 leerMunicipios();
+               
                 cargaInicial = true;
             }
-            
+  
             return View();
         }
-
+        //VISTA LISTA DE  PACIENTES NO VACUNADOS
         public ActionResult ListaDePacientes()
         {
 
@@ -297,7 +317,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
           
             return View(heap.elementos);
         }
-
+        //VISTA LISTA DE PACIENTES DE  VACUNADOS
         public ActionResult ListaDeVacunados()
         {
             
@@ -306,18 +326,19 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
             return View(lista);
         }
-        public ActionResult BuscarPersona(string dev)
+        //VISTA PARA LA  BUSQUEDA 
+        public ActionResult BuscarPersona(string Buscado)
         {
-            ViewData["GetDev"] = dev;
+            ViewData["GetDev"] = Buscado;
             var lista = Singleton.Instance.Listabuscar;
             var pacienteDpi = new Models.Data.Paciente();
             var pacienteapellido = new Models.Data.Paciente();
             var pacientenombre = new Models.Data.Paciente();
            
  
-            pacienteDpi.DPI = dev;
-            pacienteapellido.Apellido = dev;
-            pacientenombre.Nombre = dev;
+            pacienteDpi.DPI = Buscado;
+            pacienteapellido.Apellido = Buscado;
+            pacientenombre.Nombre = Buscado;
             Paciente selectedDPI;
             Paciente selectedName;
             Paciente selectApellido;
@@ -326,7 +347,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             {
                 lista.Remove(0);
             }
-            if (!string.IsNullOrEmpty(dev))
+            if (!string.IsNullOrEmpty(Buscado))
 
             {
              
@@ -336,7 +357,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 {
               
                         selectedDPI = Singleton.Instance.TablaHashPacientes.GetNode(selectedbuscadordpi.DPI);
+                    if (selectedDPI.Municipio == municipiologgeado)
+                    {
                         lista.AddLast(selectedDPI);
+                    }
 
                     return View(lista);
                  
@@ -346,10 +370,14 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 var selectedbuscadorapellido = Singleton.Instance.BuscarApellido.find(pacienteapellido, "-1", Singleton.Instance.BuscarApellido.Root);
                 if (selectedbuscadorapellido.DPI != "-1")
                 {
-                    foreach (string dpi in selectedbuscadorapellido.Treelist)
+                    foreach (string dpi in selectedbuscadorapellido.Treelist)  
                     {
+                        
                         selectApellido = Singleton.Instance.TablaHashPacientes.GetNode(dpi);
-                        lista.AddLast(selectApellido);
+                        if (selectApellido.Municipio == municipiologgeado)
+                        {
+                            lista.AddLast(selectApellido);
+                        }
                     }
                    
                     return View(lista);
@@ -361,8 +389,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     foreach (string dpi in selectedbuscadornombre.Treelist)
                     {
                         selectedName = Singleton.Instance.TablaHashPacientes.GetNode(dpi);
-                        
-                        lista.AddLast(selectedName);
+                        if (selectedName.Municipio == municipiologgeado)
+                        {
+                            lista.AddLast(selectedName);
+                        }
                     }
                   
                     return View(lista);
@@ -372,6 +402,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             }
             return View(lista);
         }
+        //VISTA PARA ASIGNAR FECHA  DE VACUNACION
         public ActionResult CalendarizarVacunacion()
         {
             csvPacientes = "";
@@ -391,7 +422,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 paciente = hashtable.GetNode(key);
                 paciente.FechaDeVacunacion = fecha;
                 contadorPacientes++;
-
+                //COMPRUEBA LA CANTIDAD DE  VACUNADOS AL MISMO TIEMPO (MODIFICABLE)
                 if (contadorPacientes == CantidadAVacunar)
                 {
                     fecha = fecha.AddDays(1);
@@ -415,7 +446,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 
             return View(lista);
         }
-
+        //VISTA PARA AGREGAR PACIENTE
         public ActionResult AgregarPaciente()
         {
 
@@ -424,17 +455,21 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //METODO PARA AGREGAR PACIENTE
         public ActionResult AgregarPaciente(IFormCollection collection)
         {
 
             try
             {
-
+                //PACIENTE CON TODA LA  INFORMACION
                 var paciente = new Models.Data.Paciente();
+                //PACIENTE SOLO CON NOMBRE
                 var paciente2 = new Models.Data.Paciente();
+                //PACIENTE SOLO CON APELLIDO
                 var paciente3 = new Models.Data.Paciente();
+                //PACIENTE SOLO CON DPI
                 var paciente4 = new Models.Data.Paciente();
-                var node = new Models.Data.PriorityNode<Models.Data.Paciente>();
+     
                 {
 
                     paciente.Nombre = collection["Nombre"];
@@ -444,14 +479,14 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     paciente.DPI = collection["DPI"];
                     paciente4.DPI = collection["DPI"];
                     paciente.Departamento = collection["Departamento"];
-                    paciente.Municipio = collection["Municipio"];
+                    paciente.Municipio = municipiologgeado;
                     paciente.Edad = Convert.ToInt32(collection["Edad"]);
                     paciente.Profesion = collection["Profesion"];
-                    node.Data = paciente;
-                    node.prioridad = calcularprioridad(paciente.Profesion, paciente.Edad);
-                    paciente.Prioridad = node.prioridad;
+
+                    paciente.Prioridad = calcularprioridad(paciente.Profesion, paciente.Edad);
                
                 }
+                //COMPROBACION DE QUE NO HAYA  UN DPI REPETIDO
                 if (Singleton.Instance.TablaHashPacientes.GetNodeByKey(paciente.DPI) != (null,null))
                 {
                     MostrarDialogo("El DPI ingresado no es válido");
@@ -475,9 +510,9 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     }
                     
 
-                    Singleton.Instance.Buscarpaciente.AddTo(paciente4,paciente.Nombre, paciente.Apellido, Singleton.Instance.Buscarpaciente.Root, paciente.DPI);
-                    Singleton.Instance.BuscarNombre.AddTo(paciente2, paciente2.Nombre, paciente.Apellido, Singleton.Instance.BuscarNombre.Root, paciente.DPI);
-                    Singleton.Instance.BuscarApellido.AddTo(paciente3, paciente2.Nombre, paciente3.Apellido, Singleton.Instance.BuscarApellido.Root, paciente.DPI);
+                    Singleton.Instance.Buscarpaciente.AddTo(paciente4, Singleton.Instance.Buscarpaciente.Root, paciente.DPI);
+                    Singleton.Instance.BuscarNombre.AddTo(paciente2,  Singleton.Instance.BuscarNombre.Root, paciente.DPI);
+                    Singleton.Instance.BuscarApellido.AddTo(paciente3,  Singleton.Instance.BuscarApellido.Root, paciente.DPI);
                     ActualizarTablaPacientes();
                     LeerTablaPacientes();
 
@@ -496,25 +531,27 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             }
 
         }
-
+        //METODO PARA SIMULACION DE  VACUNACION 
         public ActionResult VacunarPersonas()
         {
+            //COMPRUEBA SI YA SE ASIGNARON FECHAS PARA LOS PACIENTES
             if (calendarizado == false)
             {
                 
 
-                calendarizado = true;
+                //calendarizado = true;
                 return RedirectToAction(nameof(Index));
             }
 
             var heap = Singleton.Instance.MinheapPacientes;
             var listaDeEspera = Singleton.Instance.ListaDeEspera;
             var listaDeVacunados = Singleton.Instance.ListaDeVacunados;
-      
+      //REINICIA LA LISTA DE  ESPERA PARA EVITAR DUPLICACION DE DATOS
             foreach (Paciente paciente1 in listaDeEspera)
             {
                 listaDeEspera.Remove(0);
             }
+            //VUELVE A LLENAR LA LISTA DE  ESPERA
             for (int i = 0; i < heap.elementos.Length; i++)
             {
                 var paciente = heap.elementos.ElementAt(i);
@@ -525,6 +562,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 for (int i = 0; i < CantidadAVacunar; i++)
                 {
                     var temp = listaDeEspera.ElementAt(0);
+                    //CALCULA LA PROBABILIDADA DE QUE EL PACIENTE NO HAYA  ASISTIDO
                     if (probabilidadDeAusencia() == 1)
                     {
                         //CASO SI EL PACIENTE NO SE PRESENTA A LA VACUNACION 
@@ -532,7 +570,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                         temp.Prioridad = 12;
                         heap.elementos.Nodeatposition(0).Data.Prioridad = 12;
                         heap.listPriority();
-                        // MostrarDialogo("Se ha reagendado la vacunación para " + temp.Nombre + " " + temp.Apellido + " para el dia " + temp.FechaDeVacunacion + "debido a que no se presentó");
+                       //RECALENDARIZA LA VACUNACION
                         foreach (Paciente paciente1 in listaDeEspera)
                         {
                             listaDeEspera.Remove(0);
@@ -545,7 +583,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                     }
                     else
                     {
-                        //EL PACIENTE SI SE PRESENTA A LA VACUNACION
+                        //EL PACIENTE SI SE PRESENTA A LA VACUNACION Y LO ELIMINA DE LA COLA DE  PRIORIDAD Y LO AGREGA A LA LISTA DE VACUNADOS
                         int index = 0;
                         listaDeEspera.Remove(0);
                         temp.Vacunado = true;
@@ -598,19 +636,20 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
             Random random = new Random();
             return random.Next(1, 25);
         }
-
+        //METODO QUE CALCULA EL PORCENTAJE DE VACUNADOS
         public ActionResult porcentajeDeVacunados()
         {
             var listaDePacientes = Singleton.Instance.MinheapPacientes.elementos.Count();
             var listaDeVacunados = Singleton.Instance.ListaDeVacunados.Count();
             double total = listaDeVacunados + listaDePacientes;
             double porcentaje;
-
+            //CALCULO PARA EL PORCENTAJE
             porcentaje = (listaDeVacunados / total) * 100;
             MostrarDialogo("El porcentaje de vacunados es: " + Math.Round(porcentaje,2) + "%");
 
             return RedirectToAction(nameof(Index));
         }
+        //METODO PARA CALCULAR LAS  PRIORIDADES SEGUN PROFESION Y EDAD
         public int calcularprioridad(string  profesion, int Edad)
         {
             if (profesion == "Trabajador de salud")

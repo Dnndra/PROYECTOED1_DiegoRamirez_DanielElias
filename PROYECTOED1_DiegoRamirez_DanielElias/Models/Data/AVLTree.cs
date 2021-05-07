@@ -12,13 +12,13 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public AVLTreeNode<T> Root { get; internal set; }
         public  AVLTreeNode<T> NotFound { get; internal set; }
      
-        public void AddTo(T value,string nombre, string apellido, AVLTreeNode<T> current, string DPI)
+        public void AddTo(T value, AVLTreeNode<T> current, string DPI)
         {
 
           
             if (Root == null)
             {
-                Root = new AVLTreeNode<T>(value, null, this, nombre, apellido, DPI,elementos = new Manual_List<string>());
+                Root = new AVLTreeNode<T>(value, null, this,  DPI,elementos = new Manual_List<string>());
                 Root.Treelist.AddLast(DPI);
                 return;
             }
@@ -31,24 +31,24 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             {
                 if (current.Left == null)
                 {
-                    current.Left = new AVLTreeNode<T>(value, current, this, nombre,apellido,DPI, elementos = new Manual_List<string>());
+                    current.Left = new AVLTreeNode<T>(value, current, this,DPI, elementos = new Manual_List<string>());
                     current.Left.Treelist.AddLast(DPI);
                 }
                 else
                 {
-                    AddTo(value,nombre,apellido, current.Left, DPI);
+                    AddTo(value, current.Left, DPI);
                 }
             }
             else
             {
                 if (current.Right == null)
                 {
-                    current.Right = new AVLTreeNode<T>(value, current, this, nombre,apellido, DPI, elementos = new Manual_List<string>());
+                    current.Right = new AVLTreeNode<T>(value, current, this, DPI, elementos = new Manual_List<string>());
                     current.Right.Treelist.AddLast(DPI);
                 }
                 else
                 {
-                    AddTo(value,nombre,apellido, current.Right, DPI);
+                    AddTo(value, current.Right, DPI);
                 }
             }
 
@@ -121,7 +121,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                 {
 
 
-                    NotFound = new AVLTreeNode<T>(value, null, this, "", "", notfound,null);
+                    NotFound = new AVLTreeNode<T>(value, null, this,  notfound,null);
                     return NotFound;
                 }
             }
@@ -174,16 +174,16 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             { return null; }
             else
             {
-                //left subtree
+            
                 if (current.Data.CompareTo(target) < 0)
                 {
                     current.Left = Delete(current.Left, target);
-                    if (current.State != BalanceState.Balanced)//here
+                    if (current.State != BalanceState.Balanced)
                     {
                         current.Balance();
                     }
                 }
-                //right subtree
+              
                 else if (current.Data.CompareTo(target) > 0)
                 {
                     current.Right = Delete(current.Right, target);
@@ -192,12 +192,12 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                         current.Balance();
                     }
                 }
-                //if target is found
+             
                 else
                 {
                     if (current.Right != null)
                     {
-                        //delete its inorder successor
+                      
                         parent = current.Right;
                         while (parent.Left != null)
                         {
@@ -205,13 +205,13 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                         }
                         current.Data = parent.Data;
                         current.Right = Delete(current.Right, parent.Data);
-                        if (current.State != BalanceState.Balanced)//rebalancing
+                        if (current.State != BalanceState.Balanced)
                         {
                             current.Balance();
                         }
                     }
                     else
-                    {   //if current.left != null
+                    {   
                         return current.Left;
                     }
                 }
@@ -229,124 +229,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             }
             return minv;
         }
-        private AVLTreeNode<T> FindWithParent(T input, out AVLTreeNode<T> parent)
-        {
-            AVLTreeNode<T> current = Root;
-            parent = null;
 
-            while (current != null)
-            {
-              
-                int compare = current.Data.CompareTo(input);
-
-                if (compare < 0)
-                {
-                    parent = current;
-                    current = current.Left;
-                }
-                else if (compare > 0)
-                {
-                    parent = current;
-                    current = current.Right;
-                }
-                else
-                {
-                    return current;
-                }
-            }
-
-            return null;
-        }
-        private bool RemoveNode(AVLTreeNode<T> current)
-        {
-            if (current == null || current.Tree != this)
-            {
-                return false;
-            }
-
-            var parent = current.Parent;
-
-
-            if (current == Root)
-            {
-                Root = null;
-            }
-            if (current.Right == null)
-            {
-                if (parent == null)
-                {
-                    Root = current.Left;
-                }
-                else
-                {
-
-                    int compare = current.Data.CompareTo(parent.Data);
-                    if (compare > 0)
-                    {
-                        parent.Left = current.Left;
-                    }
-                    else
-                    {
-                        parent.Right = current.Left;
-                    }
-                }
-            }
-
-            else if (current.Right.Left == null)
-            {
-                current.Right.Left = current.Left;
-
-                if (parent == null)
-                {
-                    Root = current.Right;
-                }
-                else
-                {
-                    int compare = current.Data.CompareTo(parent.Data);
-                    if (compare > 0)
-                    {
-                        parent.Left = current.Right;
-                    }
-                    else
-                    {
-                        parent.Right = current.Right;
-                    }
-                }
-            }
-
-            else
-            {
-                AVLTreeNode<T> leftMost = current.Right.Left;
-                AVLTreeNode<T> leftMostParent = current.Right;
-
-                while (leftMost.Left != null)
-                {
-                    leftMostParent = leftMost;
-                    leftMost = leftMostParent.Left;
-                }
-                leftMostParent.Left = leftMost.Right;
-                leftMost.Left = current.Left;
-                leftMost.Left = current.Right;
-
-                if (parent == null)
-                {
-                    Root = leftMost;
-                }
-                else
-                {
-                    int compare = current.Data.CompareTo(parent.Data);
-                    if (compare > 0)
-                    {
-                        parent.Left = leftMost;
-                    }
-                    else
-                    {
-                        parent.Right = leftMost;
-                    }
-                }
-            }
-            return true;
-        }
-
+ 
     }
 }
