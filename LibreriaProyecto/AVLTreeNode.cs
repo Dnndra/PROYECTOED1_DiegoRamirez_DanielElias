@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PROYECTOED1_DiegoRamirez_DanielElias.Models.Data;
-namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
+using System.Text;
+
+namespace LibreriaProyecto
 {
-    public class AVLTreeNode<T> where T : IComparable
+   public class AVLTreeNode<T> where T : IComparable
     {
 
 
@@ -19,10 +18,10 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             Data = value;
             Parent = parent;
             Tree = tree;
-       
+
             DPI = Dpi;
             Treelist = treelist;
-     
+
         }
 
 
@@ -33,7 +32,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         public Manual_List<string> Treelist { get; set; }
 
-     
+
         public AVLTreeNode<T> Left
         {
             get { return left; }
@@ -191,7 +190,6 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         {
             get { return RightHeight - LeftHeight; }
         }
-
 
     }
 }

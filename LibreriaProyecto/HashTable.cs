@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
+namespace LibreriaProyecto
 {
-    public class HashNode<T>
+
+      public class HashNode<T>
     {
         public HashNode<T> Next { get; set; }
         public HashNode<T> current { get; set; }
@@ -47,21 +47,21 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         public T GetNode(string key)
         {
-            if (key != "-1" )
+            if (key != "-1")
             {
                 ValidateKey(key);
 
                 var (_, node) = GetNodeByKey(key);
 
-               
-                    
+
+
                 return node.Value;
             }
             var valueNode = new HashNode<T> { Key = key, Next = null };
 
 
 
-            return valueNode.Value; 
+            return valueNode.Value;
 
         }
 

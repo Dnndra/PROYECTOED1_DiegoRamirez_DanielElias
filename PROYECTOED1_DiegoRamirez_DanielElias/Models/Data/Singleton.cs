@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-
+using LibreriaProyecto;
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
     public sealed class Singleton

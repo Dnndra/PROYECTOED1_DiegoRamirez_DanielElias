@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Text;
 
-namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
+namespace LibreriaProyecto
 {
     public class Node<T>
     {
@@ -17,7 +17,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             this.Previous = previous;
         }
     }
-    public class Manual_List<T> :IEnumerable<T> where T :IComparable
+   public class Manual_List<T> : IEnumerable<T> where T : IComparable
 
     {
         private Node<T> head;
@@ -53,16 +53,16 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public void swap(int pos1, int pos2)
         {
             Node<T> current = head;
-            if  (pos1 == pos2)
+            if (pos1 == pos2)
             {
-                return; 
+                return;
             }
-            int cont = 0; 
-            var  node1 = Nodeatposition(pos1).Data;
+            int cont = 0;
+            var node1 = Nodeatposition(pos1).Data;
             var node2 = Nodeatposition(pos2).Data;
             while (current != null)
             {
-                if  (pos1 == cont)
+                if (pos1 == cont)
                 {
                     current.Data = node2;
 
@@ -75,9 +75,9 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                 cont++;
             }
             return;
-        
+
         }
-        
+
 
         public bool Remove(int pos)
         {
@@ -112,13 +112,13 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             }
             return false;
         }
-        public Node<T>  Nodeatposition(int pos)
+        public Node<T> Nodeatposition(int pos)
         {
             int XD = 0;
-           Node<T> Current = head;
-            if  (head == null)
+            Node<T> Current = head;
+            if (head == null)
             {
-                return head; 
+                return head;
             }
             while (Current != null)
             {
@@ -129,16 +129,16 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                 Current = Current.Next;
                 XD++;
             }
-            return Current; 
+            return Current;
         }
 
-        public  int getpositionNode(T value)
+        public int getpositionNode(T value)
         {
             Node<T> current = head;
-            int cont = 0; 
-            while (current != null )
+            int cont = 0;
+            while (current != null)
             {
-                if (current.Data.CompareTo(value)== 0)
+                if (current.Data.CompareTo(value) == 0)
                 {
                     return cont;
                 }
@@ -147,7 +147,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             }
             return -1;
         }
-     
+
 
         private Manual_List<T>.LinkedListEnumerator GetEnumerator()
         {
@@ -222,5 +222,6 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
 
         }
+
     }
 }

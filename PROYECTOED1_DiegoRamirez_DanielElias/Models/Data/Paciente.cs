@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using LibreriaProyecto;
 
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 {
@@ -19,6 +20,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public string DPI { get; set; }
 
         [Required]
+       
         public string Departamento { get; set; }
 
         [Required]
@@ -26,9 +28,9 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
 
         [Required]
         public string Profesion { get; set; }
-
-        [Required]
         
+        [Required]
+        [Range(18,110)]
         public int Edad { get; set; }
 
         public DateTime FechaDeVacunacion { get; set; }

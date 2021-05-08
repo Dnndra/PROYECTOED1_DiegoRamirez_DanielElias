@@ -10,7 +10,7 @@ using System.IO;
 using Microsoft.VisualBasic.FileIO;
 using PROYECTOED1_DiegoRamirez_DanielElias.Models.Data;
 using System.Text;
-
+using LibreriaProyecto;
 namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
 {
     
@@ -701,7 +701,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Controllers
                 {
                     return 10;
                 }
-                else if  (Edad >=1 && Edad <= 39)
+                else if  (Edad >=18 && Edad <= 39)
                 {
                     return 11;
                 }

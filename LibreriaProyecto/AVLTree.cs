@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-
-namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
+namespace LibreriaProyecto
 {
-    public class AVLTree<T> where T : IComparable
+   public class AVLTree<T> where T : IComparable
     {
         public Manual_List<string> elementos;
 
         public AVLTreeNode<T> Root { get; internal set; }
-        public  AVLTreeNode<T> NotFound { get; internal set; }
-     
+        public AVLTreeNode<T> NotFound { get; internal set; }
+
         public void AddTo(T value, AVLTreeNode<T> current, string DPI)
         {
 
-          
+
             if (Root == null)
             {
-                Root = new AVLTreeNode<T>(value, null, this,  DPI,elementos = new Manual_List<string>());
+                Root = new AVLTreeNode<T>(value, null, this, DPI, elementos = new Manual_List<string>());
                 Root.Treelist.AddLast(DPI);
                 return;
             }
@@ -31,7 +31,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             {
                 if (current.Left == null)
                 {
-                    current.Left = new AVLTreeNode<T>(value, current, this,DPI, elementos = new Manual_List<string>());
+                    current.Left = new AVLTreeNode<T>(value, current, this, DPI, elementos = new Manual_List<string>());
                     current.Left.Treelist.AddLast(DPI);
                 }
                 else
@@ -70,7 +70,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         {
             AVLTreeNode<T> current, parent;
 
-            current = find(value,"-1",  parent= Root);
+            current = find(value, "-1", parent = Root);
 
             remove(Root, value);
 
@@ -95,23 +95,23 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         public AVLTreeNode<T> find(T value, string notfound, AVLTreeNode<T> parent)
         {
 
-         
+
 
 
             if (parent != null)
             {
-                if (parent.Data.CompareTo(value) == 0 )
+                if (parent.Data.CompareTo(value) == 0)
                 {
-          
+
                     return parent;
                 }
                 else if (parent.Data.CompareTo(value) < 0)
                 {
-                    return find(value,notfound, parent.Left);
+                    return find(value, notfound, parent.Left);
                 }
                 else
                 {
-                    return find(value, notfound,  parent.Right);
+                    return find(value, notfound, parent.Right);
                 }
 
             }
@@ -121,7 +121,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                 {
 
 
-                    NotFound = new AVLTreeNode<T>(value, null, this,  notfound,null);
+                    NotFound = new AVLTreeNode<T>(value, null, this, notfound, null);
                     return NotFound;
                 }
             }
@@ -137,7 +137,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
         private AVLTreeNode<T> remove(AVLTreeNode<T> parent, T key)
         {
             if (parent == null) { return parent; }
-           
+
             if (parent.Data.CompareTo(key) < 0)
             {
                 parent.Left = remove(parent.Left, key);
@@ -151,13 +151,13 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             {
                 if (parent.Left == null)
                 {
-                  
+
 
                     return parent.Right;
                 }
                 else if (parent.Right == null)
                 {
-                  
+
                     return parent.Left;
                 }
                 parent.Data = minvalue(parent.Right);
@@ -166,7 +166,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             return parent;
 
         }
-     
+
         public AVLTreeNode<T> Delete(AVLTreeNode<T> current, T target)
         {
             AVLTreeNode<T> parent;
@@ -174,7 +174,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             { return null; }
             else
             {
-            
+
                 if (current.Data.CompareTo(target) < 0)
                 {
                     current.Left = Delete(current.Left, target);
@@ -183,7 +183,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                         current.Balance();
                     }
                 }
-              
+
                 else if (current.Data.CompareTo(target) > 0)
                 {
                     current.Right = Delete(current.Right, target);
@@ -192,12 +192,12 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                         current.Balance();
                     }
                 }
-             
+
                 else
                 {
                     if (current.Right != null)
                     {
-                      
+
                         parent = current.Right;
                         while (parent.Left != null)
                         {
@@ -211,7 +211,7 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
                         }
                     }
                     else
-                    {   
+                    {
                         return current.Left;
                     }
                 }
@@ -230,6 +230,6 @@ namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
             return minv;
         }
 
- 
+
     }
 }

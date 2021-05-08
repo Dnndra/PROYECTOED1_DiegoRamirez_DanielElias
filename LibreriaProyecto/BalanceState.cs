@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace PROYECTOED1_DiegoRamirez_DanielElias.Models.Data
+namespace LibreriaProyecto
 {
     public enum BalanceState
     {
